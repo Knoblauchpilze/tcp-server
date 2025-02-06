@@ -9,9 +9,7 @@ What you will find here:
 - a working CI running the tests on each commit.
 - a build process to package the server in a docker image.
 
-This extracts the server proposed in [bsgalone](https://github.com/Knoblauchpilze/bsgalone) and removes the logic to play the game to keep a simple echo TCP server.
-
-Yet another copy of a famous game which will be probably not as polished and not as fun as the original. This time we try out: [Battlestar Galactica Online](https://www.mmorpg.com/battlestar-galactica-online).
+This project was inspired by the server created in the [bsgalone](https://github.com/Knoblauchpilze/bsgalone) repository: the logic to play the game was not copied over and instead we kept a simple echo TCP server.
 
 # Badges
 
