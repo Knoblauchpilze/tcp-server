@@ -5,7 +5,7 @@
 #include "Context.hh"
 #include "ServerConfig.hh"
 #include <CoreObject.hh>
-#include <asio/asio.hpp>
+#include <asio.hpp>
 #include <memory>
 #include <mutex>
 #include <optional>
