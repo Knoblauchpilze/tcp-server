@@ -1,0 +1,48 @@
+name: Build services
+
+on:
+  push:
+    paths:
+      - "CMakeLists.txt"
+      - ".github/workflows/**"
+      - "build/**"
+      - "src/**"
+      - "tests/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  extract-service-tag:
+    runs-on: ubuntu-latest
+    # https://docs.github.com/en/actions/using-jobs/defining-outputs-for-jobs
+    outputs:
+      version: ${{ steps.service-version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract git commit hash
+        id: service-version
+        # https://stackoverflow.com/questions/58886293/getting-current-branch-and-commit-hash-in-github-action
+        run: echo "tag=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_OUTPUT
+
+  build-and-push-docker-image:
+    runs-on: ubuntu-latest
+    needs: [extract-service-tag]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # https://docs.github.com/en/actions/publishing-packages/publishing-docker-images#publishing-images-to-docker-hub
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./build/tcp-server/Dockerfile
+          build-args: GIT_COMMIT_HASH=${{ needs.extract-service-tag.outputs.version }}
+          push: ${{ github.actor != 'dependabot[bot]' }}
+          tags: totocorpsoftwareinc/tcp-server:${{ needs.extract-service-tag.outputs.version }}
