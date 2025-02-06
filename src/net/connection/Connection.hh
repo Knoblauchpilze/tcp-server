@@ -3,7 +3,7 @@
 
 #include "ConnectionType.hh"
 #include <CoreObject.hh>
-#include <asio/asio.hpp>
+#include <asio.hpp>
 #include <atomic>
 #include <deque>
 #include <memory>
