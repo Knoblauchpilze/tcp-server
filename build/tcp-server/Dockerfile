@@ -5,6 +5,7 @@ FROM ubuntu:22.04 AS dev-tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential=12.9ubuntu3 \
   cmake=3.22.1-1ubuntu1.22.04.2 \
+  libasio-dev=1:1.18.1-1 \
   && rm -rf /var/lib/apt/lists/*
 
 FROM dev-tools AS builder
