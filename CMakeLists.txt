@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 3.7)
 
+option(ENABLE_TESTS "Enable tests" OFF)
+
 # https://stackoverflow.com/questions/66680147/how-to-change-c-version-being-used-by-vs-code
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,8 +24,9 @@ add_subdirectory (
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 	)
 
-enable_testing ()
-
-add_subdirectory (
-	${CMAKE_CURRENT_SOURCE_DIR}/tests
-	)
+# https://stackoverflow.com/questions/50468620/what-does-enable-testing-do-in-cmake
+if (${ENABLE_TESTS})
+	add_subdirectory (
+		${CMAKE_CURRENT_SOURCE_DIR}/tests
+		)
+endif()
