@@ -58,3 +58,11 @@ docker:
 		--tag totocorpsoftwareinc/tcp-server:${GIT_COMMIT_HASH} \
 		-f build/tcp-server/Dockerfile \
 		.
+
+docker-no-cache:
+	docker build \
+		--no-cache \
+		--build-arg GIT_COMMIT_HASH=${GIT_COMMIT_HASH} \
+		--tag totocorpsoftwareinc/tcp-server:${GIT_COMMIT_HASH} \
+		-f build/tcp-server/Dockerfile \
+		.
