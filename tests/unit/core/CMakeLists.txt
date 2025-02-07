@@ -3,6 +3,6 @@ target_include_directories (tests PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}
 	)
 
-add_subdirectory (
-	${CMAKE_CURRENT_SOURCE_DIR}/core
+target_sources (server_lib PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/UuidTest.cc
 	)
