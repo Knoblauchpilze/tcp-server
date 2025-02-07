@@ -16,7 +16,11 @@ RUN make sandbox
 
 FROM ubuntu:22.04
 ARG GIT_COMMIT_HASH="undefined"
+ARG SERVER_PORT=2323
 ENV GIT_COMMIT_HASH=$GIT_COMMIT_HASH
+ENV PORT=$SERVER_PORT
 WORKDIR /app
 COPY --from=builder build/sandbox .
-CMD ["./run.sh", "server"]
+# https://docs.docker.com/reference/dockerfile/#shell-and-exec-form
+# https://stackoverflow.com/questions/40454470/how-can-i-use-a-variable-inside-a-dockerfile-cmd
+CMD ["sh", "-c", "./run.sh server ${PORT}"]

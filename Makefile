@@ -47,10 +47,10 @@ sandboxDebug: debug copy copyDebug
 sandboxTests: debugTests copy copyDebug
 
 runserver: sandbox
-	cd sandbox && ./run.sh server
+	cd sandbox && ./run.sh server 2323
 
 drunserver: sandboxDebug
-	cd sandbox && ./debug.sh server
+	cd sandbox && ./debug.sh server 2323
 
 docker:
 	docker build \
