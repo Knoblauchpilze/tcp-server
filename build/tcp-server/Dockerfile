@@ -14,9 +14,9 @@ WORKDIR /build
 COPY . ./
 RUN make sandbox
 
-FROM alpine:3.21
+FROM ubuntu:22.04
 ARG GIT_COMMIT_HASH="undefined"
 ENV GIT_COMMIT_HASH=$GIT_COMMIT_HASH
 WORKDIR /app
-COPY --from=builder sandbox bin/
-WORKDIR /app/bin
+COPY --from=builder build/sandbox .
+CMD ["./run.sh", "server"]
