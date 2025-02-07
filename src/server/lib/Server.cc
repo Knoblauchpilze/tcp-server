@@ -81,11 +81,6 @@ void Server::onConnectionLost(const net::ConnectionId connectionId)
   }
 
   const auto data = m_clientManager->tryGetDataForConnection(connectionId);
-  if (!data.playerDbId)
-  {
-    error("Connection " + std::to_string(connectionId)
-          + " lost but could not find associated player");
-  }
 
   if (data.stale)
   {
@@ -93,8 +88,7 @@ void Server::onConnectionLost(const net::ConnectionId connectionId)
     return;
   }
 
-  info("Connection " + std::to_string(connectionId) + " lost but player " + str(*data.playerDbId)
-       + " is still connected");
+  info("Connection " + std::to_string(connectionId) + " lost, marking as stale");
 
   m_clientManager->markConnectionAsStale(connectionId);
 }
