@@ -1,8 +1,8 @@
 
 #include "ClientManager.hh"
 
-namespace bsgo {
-Uuid ClientManager::NEXT_CLIENT_ID{0};
+namespace echo {
+core::Uuid ClientManager::NEXT_CLIENT_ID{0};
 
 ClientManager::ClientManager()
   : core::CoreObject("manager")
@@ -10,7 +10,7 @@ ClientManager::ClientManager()
   setService("client");
 }
 
-auto ClientManager::registerConnection(const net::ConnectionShPtr connection) -> Uuid
+auto ClientManager::registerConnection(const net::ConnectionShPtr connection) -> core::Uuid
 {
   const std::lock_guard guard(m_locker);
 
@@ -25,7 +25,7 @@ auto ClientManager::registerConnection(const net::ConnectionShPtr connection) ->
   return data.clientId;
 }
 
-void ClientManager::markConnectionAsStale(const Uuid connectionId)
+void ClientManager::markConnectionAsStale(const core::Uuid connectionId)
 {
   const std::lock_guard guard(m_locker);
 
@@ -38,8 +38,8 @@ void ClientManager::markConnectionAsStale(const Uuid connectionId)
   auto &clientData = m_clients.at(maybeClientId->second);
   if (clientData.connectionIsStale)
   {
-    error("Failed to mark connection " + str(connectionId) + " for disconnection",
-          "Client " + str(clientData.clientId) + " is already marked as stale");
+    error("Failed to mark connection " + core::str(connectionId) + " for disconnection",
+          "Client " + core::str(clientData.clientId) + " is already marked as stale");
   }
 
   clientData.connectionIsStale = true;
@@ -63,7 +63,7 @@ void ClientManager::removeConnection(const net::ConnectionId connectionId)
   info("Removed connection " + clientData.connection->str());
 }
 
-auto ClientManager::tryGetConnectionForClient(const Uuid clientId) const
+auto ClientManager::tryGetConnectionForClient(const core::Uuid clientId) const
   -> std::optional<net::ConnectionShPtr>
 {
   const std::lock_guard guard(m_locker);
@@ -71,7 +71,7 @@ auto ClientManager::tryGetConnectionForClient(const Uuid clientId) const
   const auto maybeClientData = m_clients.find(clientId);
   if (maybeClientData == m_clients.cend())
   {
-    error("Failed to get connection for " + str(clientId), "No such client");
+    error("Failed to get connection for " + core::str(clientId), "No such client");
   }
 
   if (maybeClientData->second.connectionIsStale)
@@ -139,4 +139,4 @@ auto ClientManager::tryGetClientDataForConnection(const net::ConnectionId connec
   return maybeClientData->second;
 }
 
-} // namespace bsgo
+} // namespace echo
