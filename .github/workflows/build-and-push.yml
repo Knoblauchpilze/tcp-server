@@ -36,23 +36,30 @@ jobs:
       - name: Build server
         run: |
           make sandboxTests
+      # https://github.com/actions/upload-artifact/issues/38
+      - name: Compress build folder
+        run: |
+          tar -cvf sandbox.tar sandbox
       - name: Upload build result
         uses: actions/upload-artifact@v4
         with:
           name: build-data
-          path: sandbox
+          path: sandbox.tar
 
   tests:
     runs-on: ubuntu-24.04
     needs: [build]
     steps:
-      - name: Download a single artifact
+      - name: Download build result
         uses: actions/download-artifact@v4
         with:
           name: build-data
+      - name: Uncompress build folder
+        run: |
+          tar -xvf sandbox.tar
       - name: Run tests
         run: |
-          ./bin/tests
+          ./sandbox/bin/tests
 
   build-and-push-docker-image:
     runs-on: ubuntu-latest
