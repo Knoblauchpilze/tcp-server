@@ -36,11 +36,11 @@ jobs:
       - name: Build server
         run: |
           make sandboxTests
-      - name: Upload build result
-      - uses: actions/upload-artifact@v4
-        with:
-          name: build-data
-          path: sandbox
+      # - name: Upload build result
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: build-data
+      #     path: sandbox
 
   # tests:
   #   runs-on: ubuntu-24.04
