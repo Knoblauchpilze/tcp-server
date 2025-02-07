@@ -55,7 +55,9 @@ You can remove the `Makefile.am` and `Makefile.in` files from this directory to 
 
 **Note:** in case you face problems to compile the project, you can take a look at the [Use asio](https://github.com/Knoblauchpilze/bsgalone?tab=readme-ov-file#use-the-library-in-the-project) section in the [bsgalone](https://github.com/Knoblauchpilze/bsgalone) project. Maybe this can help you.
 
-## VScode configuration
+## VScode configurations
+
+### Configuration for intellisense
 
 In case you use VScode as an IDE to work on this project, it is recommended to create a `.vscode` folder at the root of the directory. You can then copy past the following configuration in a `c_cpp_properties.json` file:
 
@@ -83,4 +85,45 @@ In case you use VScode as an IDE to work on this project, it is recommended to c
 
 Note that this will require you to install the [cmake-tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extension in the IDE and have a local `g++` version supporting at least `c++20`.
 
-#
+### Launch/debug configuration
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Server",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/cmake-build/bin/server",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [
+        {
+          "name": "PORT",
+          "value": "5000"
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Set Disassembly Flavor to Intel",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
+```
+
+This should allow you to pick the `Server` configuration win the `RUN AND DEBUG` tab:
+
+![Launch config](resources/launch-config.png)
