@@ -20,6 +20,11 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 # https://cmake.org/cmake/help/v3.0/variable/CMAKE_VERBOSE_MAKEFILE.html
 set (CMAKE_VERBOSE_MAKEFILE OFF)
 
+# https://serverfault.com/questions/279068/cant-find-so-in-the-same-directory-as-the-executable
+# https://stackoverflow.com/questions/57915564/cmake-how-to-set-rpath-to-origin-with-cmake
+# https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_RPATH_USE_ORIGIN.html#variable:CMAKE_BUILD_RPATH_USE_ORIGIN
+set(CMAKE_BUILD_RPATH_USE_ORIGIN true)
+
 add_subdirectory (
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 	)

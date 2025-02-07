@@ -22,5 +22,5 @@ ENV PORT=$SERVER_PORT
 WORKDIR /app
 COPY --from=builder build/sandbox .
 # https://docs.docker.com/reference/dockerfile/#shell-and-exec-form
-# https://stackoverflow.com/questions/40454470/how-can-i-use-a-variable-inside-a-dockerfile-cmd
-CMD ["sh", "-c", "./run.sh server ${PORT}"]
+# https://docs.docker.com/reference/dockerfile/#entrypoint
+ENTRYPOINT ["./bin/server"]
