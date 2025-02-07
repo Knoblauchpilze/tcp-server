@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build server
         run: |
-          make install
+          make sandbox
 
   build-and-push-docker-image:
     runs-on: ubuntu-latest
