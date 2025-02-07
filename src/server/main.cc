@@ -14,9 +14,44 @@ void sigIntInterceptor(const int signal)
 {
   sigIntProcessing(signal);
 }
+
+auto getPortFromArgs(const int argc, char *argv[]) -> int
+{
+  if (argc < 2)
+  {
+    throw std::out_of_range("No port passed as arguments to the server");
+  }
+
+  int port = 0;
+  try
+  {
+    port = std::stoi(argv[1]);
+  }
+  catch (const std::invalid_argument &e)
+  {
+    std::string message("Failed to convert provided port: ");
+    message += argv[1];
+    throw std::invalid_argument(message);
+  }
+  catch (const std::out_of_range &e)
+  {
+    std::string message("Provided port is not valid: ");
+    message += argv[1];
+    throw std::invalid_argument(message);
+  }
+
+  if (port < 1 || port > 65535)
+  {
+    std::string message("Port should be in range ]1; 65536[, provided value is not: ");
+    message += argv[1];
+    throw std::out_of_range(message);
+  }
+
+  return port;
+}
 } // namespace
 
-int main(int /*argc*/, char ** /*argv*/)
+int main(int argc, char *argv[])
 {
   core::log::StdLogger raw;
   raw.setLevel(core::log::Severity::DEBUG);
@@ -30,8 +65,7 @@ int main(int /*argc*/, char ** /*argv*/)
     // https://en.cppreference.com/w/cpp/utility/program/signal
     std::signal(SIGINT, sigIntInterceptor);
 
-    constexpr auto DEFAULT_SERVER_PORT = 60000;
-    server.run(DEFAULT_SERVER_PORT);
+    server.run(getPortFromArgs(argc, argv));
   }
   catch (const core::CoreException &e)
   {
@@ -40,7 +74,7 @@ int main(int /*argc*/, char ** /*argv*/)
   }
   catch (const std::exception &e)
   {
-    logger.error("Caught internal exception while setting up application", e.what());
+    logger.error("Caught exception while setting up application", e.what());
     return EXIT_FAILURE;
   }
   catch (...)
