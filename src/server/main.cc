@@ -63,7 +63,7 @@ int main(int /*argc*/, char * /*argv*/[])
 
   try
   {
-    bsgo::Server server;
+    echo::Server server;
     sigIntProcessing = [&server](const int /*signal*/) { server.requestStop(); };
     // https://en.cppreference.com/w/cpp/utility/program/signal
     std::signal(SIGINT, sigIntInterceptor);

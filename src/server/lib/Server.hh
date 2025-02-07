@@ -9,7 +9,7 @@
 #include <atomic>
 #include <condition_variable>
 
-namespace bsgo {
+namespace echo {
 class Server : public core::CoreObject
 {
   public:
@@ -42,4 +42,4 @@ class Server : public core::CoreObject
   void onConnectionReady(net::ConnectionShPtr connection);
 };
 
-} // namespace bsgo
+} // namespace echo

@@ -3,7 +3,7 @@
 #include "Server.hh"
 #include <TimeUtils.hh>
 
-namespace bsgo {
+namespace echo {
 
 Server::Server()
   : core::CoreObject("server")
@@ -96,7 +96,7 @@ void Server::onConnectionLost(const net::ConnectionId connectionId)
 void Server::onConnectionReady(net::ConnectionShPtr connection)
 {
   const auto clientId = m_clientManager->registerConnection(connection);
-  info("Registered client " + str(clientId));
+  info("Registered client " + core::str(clientId));
 }
 
-} // namespace bsgo
+} // namespace echo
