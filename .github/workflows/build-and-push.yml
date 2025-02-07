@@ -29,14 +29,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Install asio
+        run: |
+          sudo apt-get install -y libasio-dev=1:1.18.1-1
       - uses: actions/checkout@v4
       - name: Build server
         run: |
-          make sandbox
+          make sandboxTests
+      - uses: actions/upload-artifact@v4
+      - name: Upload build result
+        with:
+          name: build-data
+          path: sandbox
+
+  tests:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-data
+      - name: Run tests
+        run: |
+          ./sandbox/bin/tests
 
   build-and-push-docker-image:
     runs-on: ubuntu-latest
-    needs: [extract-service-tag, build]
+    needs: [extract-service-tag, tests]
     steps:
       - uses: actions/checkout@v4
       - name: Login to Docker Hub
