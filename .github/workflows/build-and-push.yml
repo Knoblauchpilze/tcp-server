@@ -42,17 +42,17 @@ jobs:
           name: build-data
           path: sandbox
 
-  # tests:
-  #   runs-on: ubuntu-24.04
-  #   needs: [build]
-  #   steps:
-  #     - name: Download a single artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: build-data
-  #     - name: Run tests
-  #       run: |
-  #         ./sandbox/bin/tests
+  tests:
+    runs-on: ubuntu-24.04
+    needs: [build]
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-data
+      - name: Run tests
+        run: |
+          ./sandbox/bin/tests
 
   build-and-push-docker-image:
     runs-on: ubuntu-latest
