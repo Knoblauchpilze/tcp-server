@@ -18,13 +18,8 @@ class ClientManager : public core::CoreObject
   ~ClientManager() override = default;
 
   auto registerConnection(const net::ConnectionShPtr connection) -> Uuid;
-  void registerPlayer(const Uuid clientId, const Uuid playerDbId, const Uuid playerSystemDbId);
-  void removePlayer(const Uuid playerDbId);
-  void removePlayerConnection(const Uuid playerDbId);
   void markConnectionAsStale(const net::ConnectionId connectionId);
   void removeConnection(const net::ConnectionId connectionId);
-
-  auto getClientIdForPlayer(const Uuid playerDbId) const -> Uuid;
 
   /// @brief - Try to retrieve the connection linked to the input client. It can
   /// fail to find one in case the connection is marked as stale in which case we
@@ -34,15 +29,10 @@ class ClientManager : public core::CoreObject
   auto tryGetConnectionForClient(const Uuid clientId) const -> std::optional<net::ConnectionShPtr>;
 
   auto getAllConnections() const -> std::vector<net::ConnectionShPtr>;
-  auto getAllConnectionsForSystem(const Uuid systemDbId) const -> std::vector<net::ConnectionShPtr>;
-  auto tryGetSystemForClient(const Uuid clientId) const -> std::optional<Uuid>;
-
-  void updateSystemForPlayer(const Uuid playerDbId, const Uuid systemDbId);
 
   struct ConnectionData
   {
     Uuid clientId{};
-    std::optional<Uuid> playerDbId{};
     bool stale{false};
   };
   auto tryGetDataForConnection(const net::ConnectionId connectionId) -> ConnectionData;
@@ -54,8 +44,6 @@ class ClientManager : public core::CoreObject
   struct ClientData
   {
     Uuid clientId{};
-    std::optional<Uuid> playerDbId{};
-    std::optional<Uuid> playerSystemDbId{};
     net::ConnectionShPtr connection{};
     bool connectionIsStale{false};
   };
@@ -63,7 +51,6 @@ class ClientManager : public core::CoreObject
   mutable std::mutex m_locker{};
   std::unordered_map<Uuid, ClientData> m_clients{};
   std::unordered_map<net::ConnectionId, Uuid> m_connectionToClient{};
-  std::unordered_map<Uuid, Uuid> m_playerToClient{};
 
   auto tryGetClientDataForConnection(const net::ConnectionId connectionId) const
     -> std::optional<ClientData>;
