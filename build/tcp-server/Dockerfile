@@ -20,7 +20,10 @@ ARG SERVER_PORT=2323
 ENV GIT_COMMIT_HASH=$GIT_COMMIT_HASH
 ENV PORT=$SERVER_PORT
 WORKDIR /app
-COPY --from=builder build/sandbox .
+# https://stackoverflow.com/questions/26504846/copy-directory-to-another-directory-using-add-command
+COPY --from=builder build/sandbox/lib ./lib
+COPY --from=builder build/sandbox/bin ./bin
+COPY --from=builder build/sandbox/data ./data
 # https://docs.docker.com/reference/dockerfile/#shell-and-exec-form
 # https://docs.docker.com/reference/dockerfile/#entrypoint
 ENTRYPOINT ["./bin/server"]
