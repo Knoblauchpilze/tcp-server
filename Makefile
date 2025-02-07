@@ -21,7 +21,13 @@ debugTests:
 	make -j 8
 
 release:
-	mkdir -p cmake-build/Release && cd cmake-build/Release && cmake -DCMAKE_BUILD_TYPE=Release ../.. && make -j 8
+	mkdir -p cmake-build/Release && \
+	cd cmake-build/Release && \
+	cmake \
+		-DCMAKE_BUILD_TYPE=Release \
+		../.. \
+	&& \
+	make -j 8
 
 clean:
 	rm -rf cmake-build
