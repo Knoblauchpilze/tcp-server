@@ -10,7 +10,7 @@ debug:
 	&& \
 	make -j 8
 
-debugTests:
+debugWithTests:
 	mkdir -p cmake-build/Debug && \
 	cd cmake-build/Debug && \
 	cmake \
@@ -35,28 +35,26 @@ clean:
 cleanSandbox:
 	rm -rf sandbox
 
-copyRelease:
-	rsync -avH cmake-build/Release/lib cmake-build/Release/bin sandbox/
-
-copyDebug:
-	rsync -avH cmake-build/Debug/lib cmake-build/Debug/bin sandbox/
-
-copy:
+copyData:
 	mkdir -p sandbox/
 	rsync -avH data sandbox/
 	mv sandbox/data/*.sh sandbox/
 
-sandbox: release copy copyRelease
+copyDebug: debug copyData
+	rsync -avH cmake-build/Debug/lib cmake-build/Debug/bin sandbox/
 
-sandboxDebug: debug copy copyDebug
+copyRelease: release copyData
+	rsync -avH cmake-build/Release/lib cmake-build/Release/bin sandbox/
 
-sandboxTests: debugTests copy copyDebug
-
-runserver: sandbox
+runserver: copyRelease
 	cd sandbox && ./run.sh server 2323
 
-drunserver: sandboxDebug
+drunserver: copyDebug
 	cd sandbox && ./debug.sh server 2323
+
+# https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
+PHONY: .tests
+tests: debugWithTests copyDebug
 
 docker:
 	docker build \
