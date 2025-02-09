@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 FROM dev-tools AS builder
 WORKDIR /build
 COPY . ./
-RUN make sandbox
+RUN make copyRelease
 
 FROM ubuntu:22.04
 ARG GIT_COMMIT_HASH="undefined"
