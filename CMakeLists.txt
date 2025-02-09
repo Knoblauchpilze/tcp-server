@@ -1,14 +1,11 @@
 cmake_minimum_required (VERSION 3.22)
 
-option(ENABLE_TESTS "Enable tests" OFF)
+option (ENABLE_TESTS "Enable tests" OFF)
 
 # https://stackoverflow.com/questions/66680147/how-to-change-c-version-being-used-by-vs-code
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (CMAKE_CXX_EXTENSIONS OFF)
-
-# https://stackoverflow.com/questions/5096881/does-set-target-properties-in-cmake-override-cmake-cxx-flags
-add_compile_options (-Wall -Wextra -Werror)
 
 project (echo-server LANGUAGES CXX)
 
@@ -23,7 +20,25 @@ set (CMAKE_VERBOSE_MAKEFILE OFF)
 # https://serverfault.com/questions/279068/cant-find-so-in-the-same-directory-as-the-executable
 # https://stackoverflow.com/questions/57915564/cmake-how-to-set-rpath-to-origin-with-cmake
 # https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_RPATH_USE_ORIGIN.html#variable:CMAKE_BUILD_RPATH_USE_ORIGIN
-set(CMAKE_BUILD_RPATH_USE_ORIGIN true)
+set (CMAKE_BUILD_RPATH_USE_ORIGIN true)
+
+# https://www.reddit.com/r/cmake/comments/183gqzl/nice_way_to_apply_compilelink_options_to_all_of/
+# https://github.com/saxbophone/CPP20-Cross-Platform-Template/blob/6991098e7f243ae9c6477c601953dd132f499e53/CMakeLists.txt#L77-L90
+add_library (echo-server-interface-library INTERFACE)
+# https://stackoverflow.com/questions/5096881/does-set-target-properties-in-cmake-override-cmake-cxx-flags
+# add_compile_options (-Wall -Wextra -Werror)
+target_compile_options (echo-server-interface-library INTERFACE
+	-Wall -Wextra -Werror
+	)
+
+add_library (echo-server-interface-test-library INTERFACE)
+# https://gcc.gnu.org/onlinedocs/gcc/Invoking-Gcov.html
+target_compile_options (echo-server-interface-test-library INTERFACE
+	--coverage
+	)
+target_link_libraries (echo-server-interface-test-library INTERFACE
+	gcov
+	)
 
 add_subdirectory (
 	${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -34,4 +49,4 @@ if (${ENABLE_TESTS})
 	add_subdirectory (
 		${CMAKE_CURRENT_SOURCE_DIR}/tests
 		)
-endif()
+endif ()
