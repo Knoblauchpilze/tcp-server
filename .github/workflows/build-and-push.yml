@@ -66,6 +66,14 @@ jobs:
       - name: Aggregate code coverage
         run: |
           lcov --directory cmake-build --capture --output-file coverage.info
+      - name: Upload coverage to Codecov
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true
+          handle_no_reports_found: true
+          files: ./coverage.info
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   integration-tests:
     runs-on: ubuntu-24.04
@@ -87,6 +95,14 @@ jobs:
       - name: Aggregate code coverage
         run: |
           lcov --directory cmake-build --capture --output-file coverage.info
+      - name: Upload coverage to Codecov
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true
+          handle_no_reports_found: true
+          files: ./coverage.info
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   build-and-push-docker-image:
     runs-on: ubuntu-latest
