@@ -8,7 +8,7 @@ FetchContent_Declare (
 	GIT_TAG        v1.15.2
 )
 
-FetchContent_MakeAvailable(googletest)
+FetchContent_MakeAvailable (googletest)
 
 add_subdirectory (
 	${CMAKE_CURRENT_SOURCE_DIR}/unit

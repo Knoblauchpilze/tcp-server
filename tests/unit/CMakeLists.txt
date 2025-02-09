@@ -9,12 +9,12 @@ add_subdirectory (
 	${CMAKE_CURRENT_SOURCE_DIR}/core
 	)
 
+target_include_directories (unitTests PUBLIC
+	${CMAKE_CURRENT_SOURCE_DIR}
+	)
+
 target_link_libraries (unitTests
 	core_lib
 	GTest::gtest_main
-	)
-
-target_include_directories (unitTests PUBLIC
-	${CMAKE_CURRENT_SOURCE_DIR}
-	${GTEST_INCLUDE_DIRS}
+	echo-server-interface-test-library
 	)
