@@ -63,6 +63,13 @@ jobs:
       - name: Run tests
         run: |
           ./sandbox/bin/unitTests
+      - name: Check
+        run: |
+          sudo apt-get install -y tree
+          echo "cmake-build:"
+          tree cmake-build
+          echo "dot:"
+          tree .
       - name: Aggregate code coverage
         run: |
           lcov --directory cmake-build --capture --output-file coverage.info
@@ -92,6 +99,13 @@ jobs:
       - name: Run tests
         run: |
           ./sandbox/bin/integrationTests
+      - name: Check
+        run: |
+          sudo apt-get install -y tree
+          echo "cmake-build:"
+          tree cmake-build
+          echo "dot:"
+          tree .
       - name: Aggregate code coverage
         run: |
           lcov --directory cmake-build --capture --output-file coverage.info
