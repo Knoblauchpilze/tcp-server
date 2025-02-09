@@ -39,8 +39,16 @@ jobs:
       # https://github.com/actions/upload-artifact/issues/38
       - name: Compress build folder
         run: |
-          tar -cvf sandbox.tar sandbox
+          tar -cvf cmake-build.tar cmake-build
       - name: Upload build result
+        uses: actions/upload-artifact@v4
+        with:
+          name: cmake-build
+          path: cmake-build.tar
+      - name: Compress binaries
+        run: |
+          tar -cvf sandbox.tar sandbox
+      - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
           name: build-data
@@ -56,8 +64,15 @@ jobs:
       - name: Download build result
         uses: actions/download-artifact@v4
         with:
-          name: build-data
+          name: cmake-build
       - name: Uncompress build folder
+        run: |
+          tar -xvf cmake-build.tar
+      - name: Download binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: build-data
+      - name: Uncompress binaries
         run: |
           tar -xvf sandbox.tar
       - name: Run tests
@@ -92,8 +107,15 @@ jobs:
       - name: Download build result
         uses: actions/download-artifact@v4
         with:
-          name: build-data
+          name: cmake-build
       - name: Uncompress build folder
+        run: |
+          tar -xvf cmake-build.tar
+      - name: Download binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: build-data
+      - name: Uncompress binaries
         run: |
           tar -xvf sandbox.tar
       - name: Run tests
