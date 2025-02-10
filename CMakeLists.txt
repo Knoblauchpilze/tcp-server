@@ -35,9 +35,11 @@ add_library (echo-server-interface-test-library INTERFACE)
 # https://gcc.gnu.org/onlinedocs/gcc/Invoking-Gcov.html
 target_compile_options (echo-server-interface-test-library INTERFACE
 	--coverage
+	-O0
 	)
-target_link_libraries (echo-server-interface-test-library INTERFACE
-	gcov
+# https://gcovr.com/en/stable/cookbook.html#out-of-source-builds-with-cmake
+target_link_options (echo-server-interface-test-library INTERFACE
+	--coverage
 	)
 
 add_subdirectory (
