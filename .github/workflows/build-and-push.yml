@@ -71,7 +71,7 @@ jobs:
             --directory cmake-build \
             --exclude=*googletest* \
             --exclude=\/usr\/include\/* \
-            --exclude=*tests\/unit\/* \
+            --exclude=*tests\/* \
             --capture \
             --output-file coverage.info
       - name: Display coverage
@@ -109,7 +109,7 @@ jobs:
             --directory cmake-build \
             --exclude=*googletest* \
             --exclude=\/usr\/include\/* \
-            --exclude=*tests\/integration\/* \
+            --exclude=*tests\/* \
             --capture \
             --output-file coverage.info
       - name: Display coverage
