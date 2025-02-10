@@ -78,16 +78,21 @@ jobs:
       - name: Run tests
         run: |
           ./sandbox/bin/unitTests
-      - name: Check
-        run: |
-          sudo apt-get install -y tree
-          echo "cmake-build:"
-          tree cmake-build
-          echo "dot:"
-          tree .
       - name: Aggregate code coverage
+        # https://github.com/linux-test-project/lcov/issues/296
+        # https://stackoverflow.com/questions/38438219/how-to-remove-certain-directories-from-lcov-code-coverage-report
         run: |
-          lcov --directory cmake-build --capture --output-file coverage.info
+          lcov \
+            --directory cmake-build \
+            --exclude=*googletest* \
+            --exclude=\/usr\/include*
+            --exclude=*tests\/unit\/* \
+            --exclude=*tests\/integration\/* \
+            --capture \
+            --output-file coverage.info
+      - name: Display coverage
+        run: |
+          lcov --list coverage.info
       - name: Upload coverage to Codecov
         if: ${{ github.actor != 'dependabot[bot]' }}
         uses: codecov/codecov-action@v5
@@ -121,20 +126,19 @@ jobs:
       - name: Run tests
         run: |
           ./sandbox/bin/integrationTests
-      - name: Check cmake-build
-        run: |
-          sudo apt-get install -y tree
-          echo "cmake-build:"
-          tree cmake-build
-      - name: Check .
-        run: |
-          echo "dot:"
-          tree .
       - name: Aggregate code coverage
-        # https://gcovr.com/en/stable/cookbook.html#out-of-source-builds-with-cmake
         run: |
-          cd cmake-build
-          gcovr -r ../src . --txt ../coverage.info
+          lcov \
+            --directory cmake-build \
+            --exclude=*googletest* \
+            --exclude=\/usr\/include*
+            --exclude=*tests\/unit\/* \
+            --exclude=*tests\/integration\/* \
+            --capture \
+            --output-file coverage.info
+      - name: Display coverage
+        run: |
+          lcov --list coverage.info
       - name: Upload coverage to Codecov
         if: ${{ github.actor != 'dependabot[bot]' }}
         uses: codecov/codecov-action@v5
