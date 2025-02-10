@@ -78,6 +78,17 @@ jobs:
       - name: Run tests
         run: |
           ./sandbox/bin/unitTests
+
+      - name: Print path
+        run: |
+          pwd
+      - name: Print local directory
+        run: |
+          tree .
+      - name: Print cmake-build
+        run: |
+          tree .
+
       - name: Aggregate code coverage
         # https://github.com/linux-test-project/lcov/issues/296
         # https://stackoverflow.com/questions/38438219/how-to-remove-certain-directories-from-lcov-code-coverage-report
@@ -85,7 +96,7 @@ jobs:
           lcov \
             --directory cmake-build \
             --exclude=*googletest* \
-            --exclude=\/usr\/include* \
+            --exclude=\/usr\/include\/* \
             --exclude=*tests\/unit\/* \
             --exclude=*tests\/integration\/* \
             --capture \
@@ -126,12 +137,23 @@ jobs:
       - name: Run tests
         run: |
           ./sandbox/bin/integrationTests
+
+      - name: Print path
+        run: |
+          pwd
+      - name: Print local directory
+        run: |
+          tree .
+      - name: Print cmake-build
+        run: |
+          tree .
+
       - name: Aggregate code coverage
         run: |
           lcov \
             --directory cmake-build \
             --exclude=*googletest* \
-            --exclude=\/usr\/include* \
+            --exclude=\/usr\/include\/* \
             --exclude=*tests\/unit\/* \
             --exclude=*tests\/integration\/* \
             --capture \
