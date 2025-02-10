@@ -121,16 +121,20 @@ jobs:
       - name: Run tests
         run: |
           ./sandbox/bin/integrationTests
-      - name: Check
+      - name: Check cmake-build
         run: |
           sudo apt-get install -y tree
           echo "cmake-build:"
           tree cmake-build
+      - name: Check .
+        run: |
           echo "dot:"
           tree .
       - name: Aggregate code coverage
+        # https://gcovr.com/en/stable/cookbook.html#out-of-source-builds-with-cmake
         run: |
-          lcov --directory cmake-build --capture --output-file coverage.info
+          cd cmake-build
+          gcovr -r ../src . --txt ../coverage.info
       - name: Upload coverage to Codecov
         if: ${{ github.actor != 'dependabot[bot]' }}
         uses: codecov/codecov-action@v5
