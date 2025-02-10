@@ -85,7 +85,7 @@ jobs:
           lcov \
             --directory cmake-build \
             --exclude=*googletest* \
-            --exclude=\/usr\/include*
+            --exclude=\/usr\/include* \
             --exclude=*tests\/unit\/* \
             --exclude=*tests\/integration\/* \
             --capture \
@@ -131,7 +131,7 @@ jobs:
           lcov \
             --directory cmake-build \
             --exclude=*googletest* \
-            --exclude=\/usr\/include*
+            --exclude=\/usr\/include* \
             --exclude=*tests\/unit\/* \
             --exclude=*tests\/integration\/* \
             --capture \
