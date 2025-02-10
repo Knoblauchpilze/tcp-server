@@ -59,6 +59,17 @@ You can remove the `Makefile.am` and `Makefile.in` files from this directory to 
 
 ## VScode configurations
 
+### Extensions
+
+In order to make it easy to debug and work on the project directly into the IDE, the following two extensions are recommended:
+
+- [cmake-tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools).
+- [test-mate](https://marketplace.visualstudio.com/items?itemName=matepek.vscode-catch2-test-adapter)
+
+They will respectively help you build the project and debug/start it in your IDE and allow to run and debug tests.
+
+The following sections assume that you installed both.
+
 ### Configuration for intellisense
 
 In case you use VScode as an IDE to work on this project, it is recommended to create a `.vscode` folder at the root of the directory. You can then copy past the following configuration in a `c_cpp_properties.json` file:
@@ -85,9 +96,36 @@ In case you use VScode as an IDE to work on this project, it is recommended to c
 }
 ```
 
-Note that this will require you to install the [cmake-tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extension in the IDE and have a local `g++` version supporting at least `c++20`.
+Note that this will require you to have a local `g++` version supporting at least `c++20`.
+
+### Configuration for CMake
+
+The `cmake` tool extension allows to configure a custom build folder and to set arguments for the configure step. In this project we use conditional targets to build the tests: this is activated (as defined in the [Makefile](Makefile)) by the `ENABLE_TESTS` flag.
+
+It is required to instruct the extension to use this flag when configuring the project so that it detects correctly all the target.
+
+You can use the following configuration and paste it in the `.vscode` folder created above under `settings.json`:
+
+```json
+{
+  "cmake.configureOnOpen": false,
+  "cmake.buildDirectory": "${workspaceFolder}/cmake-build",
+  "cmake.configureArgs": ["-DENABLE_TESTS=ON"],
+  "testMate.cpp.discovery.gracePeriodForMissing": 500,
+  "testMate.cpp.discovery.runtimeLimit": 500,
+  "testMate.cpp.test.advancedExecutables": [
+    {
+      "pattern": "cmake-build/**/*{test,Test,TEST}*"
+    }
+  ],
+  "C_Cpp.errorSquiggles": "enabled",
+  "C_Cpp.default.compilerPath": "/usr/bin/g++"
+}
+```
 
 ### Launch/debug configuration
+
+In order to run and debug the executable(s) created by the project you can use the following launch configuration: this will launch the server and allow to debug it if needed directly in the IDE.
 
 ```json
 {
