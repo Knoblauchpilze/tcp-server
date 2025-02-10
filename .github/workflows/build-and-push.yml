@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "CMakeLists.txt"
+      - "codecov.yml"
       - ".github/workflows/**"
       - "build/**"
       - "src/**"
