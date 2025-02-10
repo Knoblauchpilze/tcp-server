@@ -39,20 +39,12 @@ jobs:
       # https://github.com/actions/upload-artifact/issues/38
       - name: Compress build folder
         run: |
-          tar -cvf cmake-build.tar cmake-build
+          tar -cvf build-data.tar .
       - name: Upload build result
         uses: actions/upload-artifact@v4
         with:
-          name: cmake-build
-          path: cmake-build.tar
-      - name: Compress binaries
-        run: |
-          tar -cvf sandbox.tar sandbox
-      - name: Upload binaries
-        uses: actions/upload-artifact@v4
-        with:
           name: build-data
-          path: sandbox.tar
+          path: build-data.tar
 
   unit-tests:
     runs-on: ubuntu-24.04
@@ -61,20 +53,13 @@ jobs:
       - name: Install lcov
         run: |
           sudo apt-get install -y lcov=2.0-4ubuntu2
-      - name: Download build result
-        uses: actions/download-artifact@v4
-        with:
-          name: cmake-build
-      - name: Uncompress build folder
-        run: |
-          tar -xvf cmake-build.tar
-      - name: Download binaries
+      - name: Download build data
         uses: actions/download-artifact@v4
         with:
           name: build-data
-      - name: Uncompress binaries
+      - name: Uncompress build data
         run: |
-          tar -xvf sandbox.tar
+          tar -xvf build-data.tar
       - name: Run tests
         run: |
           ./sandbox/bin/unitTests
@@ -120,20 +105,13 @@ jobs:
       - name: Install lcov
         run: |
           sudo apt-get install -y lcov=2.0-4ubuntu2
-      - name: Download build result
-        uses: actions/download-artifact@v4
-        with:
-          name: cmake-build
-      - name: Uncompress build folder
-        run: |
-          tar -xvf cmake-build.tar
-      - name: Download binaries
+      - name: Download build data
         uses: actions/download-artifact@v4
         with:
           name: build-data
-      - name: Uncompress binaries
+      - name: Uncompress build data
         run: |
-          tar -xvf sandbox.tar
+          tar -xvf build-data.tar
       - name: Run tests
         run: |
           ./sandbox/bin/integrationTests
