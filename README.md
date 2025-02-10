@@ -13,7 +13,9 @@ This project was inspired by the server created in the [bsgalone](https://github
 
 # Badges
 
-TODO: Will come later
+[![Build services](https://github.com/Knoblauchpilze/tcp-server/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/Knoblauchpilze/tcp-server/actions/workflows/build-and-push.yml)
+
+[![codecov](https://codecov.io/gh/Knoblauchpilze/tcp-server/graph/badge.svg?token=UZQOYDWZJ6)](https://codecov.io/gh/Knoblauchpilze/tcp-server)
 
 # Installation
 
