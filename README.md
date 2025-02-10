@@ -63,7 +63,7 @@ You can remove the `Makefile.am` and `Makefile.in` files from this directory to 
 
 In order to make it easy to debug and work on the project directly into the IDE, the following two extensions are recommended:
 
-- [cmake-tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools).
+- [cmake-tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
 - [test-mate](https://marketplace.visualstudio.com/items?itemName=matepek.vscode-catch2-test-adapter)
 
 They will respectively help you build the project and debug/start it in your IDE and allow to run and debug tests.
