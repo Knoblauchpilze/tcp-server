@@ -123,7 +123,7 @@ You can use the following configuration and paste it in the `.vscode` folder cre
 
 ### Launch/debug configuration
 
-In order to run and debug the executable(s) created by the project you can use the following launch configuration: this will launch the server and allow to debug it if needed directly in the IDE.
+In order to run and debug the executable(s) created by the project you can use the following launch configuration: this will launch the server and allow to debug it if needed directly in the IDE. You can paste the following content in a file under `.vscode/launch.json`:
 
 ```json
 {
