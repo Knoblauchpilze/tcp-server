@@ -55,8 +55,6 @@ sudo cp -r asio-1.28.0/include/* /usr/local/include/asio
 
 You can remove the `Makefile.am` and `Makefile.in` files from this directory to not pollute the includes.
 
-**Note:** in case you face problems to compile the project, you can take a look at the [Use asio](https://github.com/Knoblauchpilze/bsgalone?tab=readme-ov-file#use-the-library-in-the-project) section in the [bsgalone](https://github.com/Knoblauchpilze/bsgalone) project. Maybe this can help you.
-
 ## VScode configurations
 
 ### Extensions
