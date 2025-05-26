@@ -26,7 +26,6 @@ set (CMAKE_BUILD_RPATH_USE_ORIGIN true)
 # https://github.com/saxbophone/CPP20-Cross-Platform-Template/blob/6991098e7f243ae9c6477c601953dd132f499e53/CMakeLists.txt#L77-L90
 add_library (echo-server-interface-library INTERFACE)
 # https://stackoverflow.com/questions/5096881/does-set-target-properties-in-cmake-override-cmake-cxx-flags
-# add_compile_options (-Wall -Wextra -Werror)
 target_compile_options (echo-server-interface-library INTERFACE
 	-Wall -Wextra -Werror
 	)
