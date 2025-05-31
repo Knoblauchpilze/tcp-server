@@ -133,7 +133,7 @@ In order to run and debug the executable(s) created by the project you can use t
       "name": "Server",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/cmake-build/bin/server",
+      "program": "${workspaceFolder}/cmake-build/bin/Debug/server",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${fileDirname}",
