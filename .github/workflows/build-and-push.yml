@@ -55,7 +55,7 @@ jobs:
         run: |
           sudo apt-get install -y lcov=2.0-4ubuntu2
       - name: Download build data
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: build-data
       - name: Uncompress build data
@@ -95,7 +95,7 @@ jobs:
         run: |
           sudo apt-get install -y lcov=2.0-4ubuntu2
       - name: Download build data
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: build-data
       - name: Uncompress build data
